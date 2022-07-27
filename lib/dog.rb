@@ -28,6 +28,7 @@ class Dog
     end
     
     def save
+      # TODO: How do I do the bonus on this method? all instances have an ID when saved?
       sql = <<-SQL
       INSERT INTO dogs (name, breed)
       VALUES (?, ?)
