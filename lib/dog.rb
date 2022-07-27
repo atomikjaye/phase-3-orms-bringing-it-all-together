@@ -89,12 +89,38 @@ class Dog
     end
 
 def self.find_or_create_by(name:, breed:)
-  sql = <<-SQL
+  # binding.pry
+  if self.find_by_name(name).name == name && self.find_by_name(name).breed == breed
+    # binding.pry
+    self.find_by_name(name)
+  else
+    # binding.pry
+    self.create(name: name, breed: breed)
+  end
+end
 
-  INSERT INTO IF NOT EXISTS dogs (name, breed)
-      VALUES (?, ?)
-  SQL
+  def update
+    sql = <<-SQL
+      UPDATE dogs
+      SET name = ?
+      WHERE id = ?
+    SQL
+
+    DB[:conn].execute(sql, self.name, self.id)
+  end
+# if
+
+#   DB[:conn].execute(sql, self.name, self.breed)
+#       # WHY DOES THIS WORK?
+#       # self.id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
+#       # self
+
+
 end
 
 
-end
+# dog1 = Dog.create(name: 'teddy', breed: 'cockapoo')
+# dog2 = Dog.find_or_create_by(name: 'teddy', breed: 'cockapoo')
+
+#       puts dog1
+#       puts dog2
