@@ -88,5 +88,13 @@ class Dog
       end.first
     end
 
+def self.find_or_create_by(name:, breed:)
+  sql = <<-SQL
+
+  INSERT INTO IF NOT EXISTS dogs (name, breed)
+      VALUES (?, ?)
+  SQL
+end
+
 
 end
